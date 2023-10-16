@@ -29,4 +29,21 @@ resource "aws_lb" "main" {
   security_groups    = [aws_security_group.sg.id]
   subnets            = var.subnets
   tags               = merge(var.tags, { Name = "${var.name}-alb-${var.env}" })
+
+}
+
+resource "aws_lb_listener" "main" {
+  load_balancer_arn = aws_lb.main.arn
+  port              = var.app_port
+  protocol          = "HTTP"
+
+  default_action {
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "Unauthorized"
+      status_code  = "403"
+    }
+  }
 }

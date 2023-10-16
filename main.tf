@@ -28,7 +28,7 @@ resource "aws_lb" "main" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.sg.id]
   subnets            = var.subnets
-  tags               = merge(var.tags, { Name = "${var.name}-alb-${var.env}" })
+  tags               =  merge(var.tags, { Name = "${var.name}-alb-${var.env}-sg" })
 
 }
 
